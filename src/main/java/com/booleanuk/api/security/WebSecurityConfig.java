@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -60,6 +61,10 @@ public class WebSecurityConfig {
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/loans/borrow").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("loans/return/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/loans/user/{userId}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/loans/item/{itemId}").hasRole("ADMIN")
                         .requestMatchers("/books", "/books/**", "/cds", "/cds/**", "/dvds", "/dvds/**", "/video-games", "/video-games/**", "/board-games", "/board-games/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/books", "/books/**", "/cds", "/cds/**", "/dvds", "/dvds/**", "/video-games", "/video-games/**", "/board-games", "/board-games/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/books", "/books/**", "/cds", "/cds/**", "/dvds", "/dvds/**", "/video-games", "/video-games/**", "/board-games", "/board-games/**").hasRole("ADMIN")

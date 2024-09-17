@@ -1,30 +1,27 @@
 package com.booleanuk.api.models;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Entity;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "dvds")
-public class DVD {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String title;
+public class DVD extends Item {
     private String director;
     private int year;
     private String genre;
 
-    public DVD(String title, String director, int year, String genre) {
-        this.title = title;
+    public DVD(String title, String type, String director, int year, String genre) {
+        super(title, type);
         this.director = director;
         this.year = year;
         this.genre = genre;
     }
 
     public DVD(int id) {
-        this.id = id;
+        super(id);
     }
 }

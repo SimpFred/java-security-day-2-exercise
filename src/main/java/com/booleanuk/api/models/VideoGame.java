@@ -1,30 +1,25 @@
 package com.booleanuk.api.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "video_games")
-public class VideoGame {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "title")
-    private String title;
-    @Column(name = "game_studio")
+public class VideoGame extends Item {
     private String gameStudio;
-    @Column(name = "age_rating")
     private int ageRating;
-    @Column(name = "number_of_players")
     private int numberOfPlayers;
-    @Column(name = "genre")
     private String genre;
 
-    public VideoGame(String title, String gameStudio, int ageRating, int numberOfPlayers, String genre) {
-        this.title = title;
+    public VideoGame(String title, String type, String gameStudio, int ageRating, int numberOfPlayers, String genre) {
+        super(title, type);
         this.gameStudio = gameStudio;
         this.ageRating = ageRating;
         this.numberOfPlayers = numberOfPlayers;
@@ -32,6 +27,6 @@ public class VideoGame {
     }
 
     public VideoGame(int id) {
-        this.id = id;
+        super(id);
     }
 }
